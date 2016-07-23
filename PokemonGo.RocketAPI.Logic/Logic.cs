@@ -425,6 +425,14 @@ namespace PokemonGo.RocketAPI.Logic
                     if (hsGonaLocations.Contains(vrloc))
                         continue;
 
+                    List<string> lstData = vrloc.Split(';').ToList();
+
+                    if (hsVisitedPokeSpawnIds.Contains(lstData[2]))
+                        continue;
+
+                    if (Convert.ToDouble(returnMinerUTC()) > Convert.ToDouble(lstData[3]))
+                        continue;
+
                     double dblLat;
                     double dblLong;
 
@@ -650,6 +658,12 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
 
         private static HashSet<string> hsVisitedPokeSpawnIds = new HashSet<string>();
 
+        private static string returnMinerUTC()
+        {
+            string srUtcNow = DateTime.UtcNow.ToUnixTime().ToString();
+            return srUtcNow.Substring(0, srUtcNow.Length - 3);
+        }
+
         private static List<string> funcReturnPokeLoc()
         {
             List<string> lstPokeInfo = new List<string>();
@@ -665,17 +679,14 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
                 return lstPokeInfo;
             }
 
-
-            string srUtcNow = DateTime.UtcNow.ToUnixTime().ToString();
-            srUtcNow = srUtcNow.Substring(0, srUtcNow.Length - 3);
-            string sql = "select * from sightings where expire_timestamp > " + srUtcNow;
+            string sql = "select * from sightings where expire_timestamp > " + returnMinerUTC();
             SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 if (hsVisitedPokeSpawnIds.Contains(reader["spawn_id"]))
                     continue;
-                string srResult = reader["lat"] + ";" + reader["lon"] + ";" + reader["spawn_id"];
+                string srResult = reader["lat"] + ";" + reader["lon"] + ";" + reader["spawn_id"] + ";" + reader["expire_timestamp"];
                 lstPokeInfo.Add(srResult);
             }
             return lstPokeInfo;
