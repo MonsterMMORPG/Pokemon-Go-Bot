@@ -446,7 +446,7 @@ namespace PokemonGo.RocketAPI.Logic
 
                 blPokeStopFound = false;
 
-                if (blCriticalBall == true)
+                if (blCriticalBall == true || Client.blForcePokeStop == true)
                 {
                     Logger.Write("Critical BALL check...", LogLevel.Self, ConsoleColor.Yellow);
                     blCheckingPokeStop = true;
@@ -481,7 +481,7 @@ namespace PokemonGo.RocketAPI.Logic
             }
         }
 
-   
+
 
         private async Task resetLocation()
         {
