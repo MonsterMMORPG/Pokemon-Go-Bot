@@ -481,8 +481,12 @@ namespace PokemonGo.RocketAPI.Logic
             }
         }
 
+   
+
         private async Task resetLocation()
         {
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("EN-US");
+
             if (Client.irLastPokeStopIndex >= Client.lstPokeStopLocations.Count)
             {
                 Client.irLastPokeStopIndex = 0;
