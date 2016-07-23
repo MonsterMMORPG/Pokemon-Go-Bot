@@ -301,7 +301,6 @@ namespace PokemonGo.RocketAPI.Logic
             }
         }
 
-
         private async Task ExecuteCatchAllNearbyPokemons()
         {
             Logger.Write("Looking for pokemon..", LogLevel.Debug);
@@ -484,10 +483,20 @@ namespace PokemonGo.RocketAPI.Logic
 
         private async Task resetLocation()
         {
-            Logger.Write("Re setting global location no Poke Stop", LogLevel.Self, ConsoleColor.Yellow);
+            if (Client.irLastPokeStopIndex >= Client.lstPokeStopLocations.Count)
+            {
+                Client.irLastPokeStopIndex = 0;
+            }
+
+            Logger.Write("Re setting global location no Poke Stop index " + Client.irLastPokeStopIndex + " : "
+                + Client.lstPokeStopLocations[Client.irLastPokeStopIndex], LogLevel.Self, ConsoleColor.Yellow);
+
+            double dblLat = Convert.ToDouble(Client.lstPokeStopLocations[Client.irLastPokeStopIndex].Split(':')[0]);
+            double dblLng = Convert.ToDouble(Client.lstPokeStopLocations[Client.irLastPokeStopIndex].Split(':')[1]);
+            Client.irLastPokeStopIndex++;
 
             await
-_navigation.HumanLikeWalking(new GeoCoordinate(Client.dblGlobalLat, Client.dblGlobalLng),
+_navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
                _clientSettings.WalkingSpeedInKilometerPerHour, ExecuteCatchAllNearbyPokemons);
         }
 

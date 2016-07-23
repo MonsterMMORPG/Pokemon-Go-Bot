@@ -25,7 +25,7 @@ namespace PokemonGo.RocketAPI.Logic
         }
 
         public async Task<IEnumerable<PokemonData>> GetDuplicatePokemonToTransfer(
-            bool keepPokemonsThatCanEvolve = false, IEnumerable<PokemonId> filter = null)
+         bool keepPokemonsThatCanEvolve = false, IEnumerable<PokemonId> filter = null)
         {
             var myPokemon = await GetPokemons();
 
@@ -223,7 +223,7 @@ namespace PokemonGo.RocketAPI.Logic
                     ss.Release();
                 }
             }
-           
+
         }
     }
 }

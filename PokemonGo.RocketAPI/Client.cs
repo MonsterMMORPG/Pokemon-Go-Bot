@@ -12,7 +12,9 @@ using PokemonGo.RocketAPI.Extensions;
 using PokemonGo.RocketAPI.GeneratedCode;
 using PokemonGo.RocketAPI.Helpers;
 using PokemonGo.RocketAPI.Login;
+using PokemonGo.RocketAPI;
 using static PokemonGo.RocketAPI.GeneratedCode.Response.Types;
+using System.Collections.Generic;
 
 #endregion
 
@@ -33,6 +35,8 @@ namespace PokemonGo.RocketAPI
         public static double dblGlobalLat = 0;
         public static double dblGlobalLng = 0;
 
+        public static List<string> lstPokeStopLocations = new List<string> { "36.80204:34.63328", "36.79690:34.62960", "36.79528:34.62761" };
+        public static int irLastPokeStopIndex = 0;
 
         public Client(ISettings settings)
         {
@@ -49,7 +53,7 @@ namespace PokemonGo.RocketAPI
                         double temp_lat = Convert.ToDouble(latlng[0]);
                         double temp_long = Convert.ToDouble(latlng[1]);
 
-                        if(temp_lat >= -90 && temp_lat <= 90 && temp_long >= -180 && temp_long <= 180)
+                        if (temp_lat >= -90 && temp_lat <= 90 && temp_long >= -180 && temp_long <= 180)
                         {
                             SetCoordinates(Convert.ToDouble(latlng[0]), Convert.ToDouble(latlng[1]),
                             Settings.DefaultAltitude);
@@ -232,6 +236,8 @@ namespace PokemonGo.RocketAPI
                     _httpClient.PostProtoPayload<Request, FortDetailsResponse>($"https://{_apiUrl}/rpc",
                         fortDetailRequest);
         }
+
+
 
         public async Task<GetInventoryResponse> GetInventory()
         {
