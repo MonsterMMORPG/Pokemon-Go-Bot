@@ -16,6 +16,7 @@ using System.IO;
 using System.Globalization;
 
 using System.Device.Location;
+using System.Data.SQLite;
 
 
 #endregion
@@ -401,7 +402,8 @@ namespace PokemonGo.RocketAPI.Logic
 
         private async Task ExeCuteMyFarm()
         {
-            var vrList = fucnReturnLocs();
+            var vrList = funcReturnPokeLoc();
+
             Logger.Write("Location found count " + vrList.Count, LogLevel.Self, ConsoleColor.DarkGray);
             int irLoop = 1;
             double dblMinDistance = 9999999;
@@ -411,7 +413,7 @@ namespace PokemonGo.RocketAPI.Logic
 
             if (hsGonaLocations.Count > vrList.Count - 10)
             {
-                hsGonaLocations = new HashSet<string>();
+                //  hsGonaLocations = new HashSet<string>(); bu eski dosyadan okuma
             }
 
             for (int i = 0; i < vrList.Count; i++)
@@ -420,6 +422,7 @@ namespace PokemonGo.RocketAPI.Logic
                 {
                     if (hsGonaLocations.Contains(vrloc))
                         continue;
+
                     double dblLat;
                     double dblLong;
 
@@ -431,8 +434,7 @@ namespace PokemonGo.RocketAPI.Logic
                         continue;
                     }
 
-                    var distance = LocationUtils.CalculateDistanceInMeters(_client.CurrentLat, _client.CurrentLng,
-            dblLat, dblLong);
+                    var distance = LocationUtils.CalculateDistanceInMeters(_client.CurrentLat, _client.CurrentLng, dblLat, dblLong);
 
                     if (distance < dblMinDistance)
                     {
@@ -644,8 +646,38 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             await Task.Delay(3000);
         }
 
+        private static HashSet<string> hsVisitedPokeSpawnIds = new HashSet<string>();
 
-        private static List<string> fucnReturnLocs()
+        private static List<string> funcReturnPokeLoc()
+        {
+            List<string> lstPokeInfo = new List<string>();
+            SQLiteConnection m_dbConnection = null;
+            try
+            {
+                m_dbConnection =
+       new SQLiteConnection(@"Data Source=C:\Python27\db.sqlite;Version=3;");
+                m_dbConnection.Open();
+            }
+            catch (Exception E)
+            {
+                return lstPokeInfo;
+            }
+
+
+            string srUtcNow = DateTime.UtcNow.ToUnixTime().ToString();
+            srUtcNow = srUtcNow.Substring(0, srUtcNow.Length - 3);
+            string sql = "select * from sightings where expire_timestamp > " + srUtcNow;
+            SQLiteCommand command = new SQLiteCommand(sql, m_dbConnection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string srResult = reader["lat"] + ";" + reader["lon"] + ";" + reader["spawn_id"];
+                lstPokeInfo.Add(srResult);
+            }
+            return lstPokeInfo;
+        }
+
+        private static List<string> funcReturnLocs()
         {
             List<string> lstFileNames = new List<string> { @"D:\74 pokemon go\pokestop_poke_list.txt" };
             List<string> LstLatLong = new List<string>();
@@ -711,6 +743,7 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
                 Logger.Write($"# CP {pokemon.Cp.ToString().PadLeft(4, ' ')}/{PokemonInfo.CalculateMaxCP(pokemon).ToString().PadLeft(4, ' ')} | ({PokemonInfo.CalculatePokemonPerfection(pokemon).ToString("0.00")}% perfect)\t| Lvl {PokemonInfo.GetLevel(pokemon)}\t NAME: '{pokemon.PokemonId}'", LogLevel.Info, ConsoleColor.Yellow);
             }
         }
+
 
     }
 }

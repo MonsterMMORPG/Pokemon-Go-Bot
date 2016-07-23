@@ -30,7 +30,7 @@ namespace PokemonGo.RocketAPI
         public static bool blUseMySystem = true;
         public static bool blUseMarina = false;
         public static bool blOverWriteLastLoc = true;
-        public static bool blForcePokeStop = true;
+        public static bool blForcePokeStop = false;
         public static double marinaLat = 36.77120;
         public static double marinaLng = 34.57015;
         public static double dblGlobalLat = 0;
