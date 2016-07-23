@@ -16,6 +16,7 @@ using PokemonGo.RocketAPI;
 using static PokemonGo.RocketAPI.GeneratedCode.Response.Types;
 using System.Collections.Generic;
 
+
 #endregion
 
 namespace PokemonGo.RocketAPI
@@ -35,6 +36,8 @@ namespace PokemonGo.RocketAPI
         public static double marinaLng = 34.57015;
         public static double dblGlobalLat = 0;
         public static double dblGlobalLng = 0;
+        public static HashSet<string> hsVisitedPokeSpawnIds = new HashSet<string>();
+
 
         public static List<string> lstPokeStopLocations = new List<string> { "36.80204:34.63328", "36.79690:34.62960", "36.79528:34.62761" };
         public static int irLastPokeStopIndex = 0;
@@ -97,6 +100,15 @@ namespace PokemonGo.RocketAPI
                 Logger.Write("Manual set cordinates!", LogLevel.Warning);
             }
 
+            string srFileVisitedLocs = Directory.GetCurrentDirectory() + "\\VisitedPokeSpawns.txt";
+            hsVisitedPokeSpawnIds = new HashSet<string>();
+            if (File.Exists(srFileVisitedLocs))
+            {
+                foreach (var item in File.ReadLines(srFileVisitedLocs))
+                {
+                    hsVisitedPokeSpawnIds.Add(item);
+                }
+            }
 
             dblGlobalLat = CurrentLat;
             dblGlobalLng = CurrentLng;

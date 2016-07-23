@@ -324,7 +324,9 @@ namespace PokemonGo.RocketAPI.Logic
                 var distance = LocationUtils.CalculateDistanceInMeters(_client.CurrentLat, _client.CurrentLng, pokemon.Latitude, pokemon.Longitude);
                 await Task.Delay(distance > 100 ? 15000 : 500);
 
-                hsVisitedPokeSpawnIds.Add(pokemon.SpawnpointId.ToString());
+                string srFilename = Directory.GetCurrentDirectory() + "\\VisitedPokeSpawns.txt";
+                File.WriteAllLines(srFilename, Client.hsVisitedPokeSpawnIds);
+                Client.hsVisitedPokeSpawnIds.Add(pokemon.SpawnpointId.ToString());
 
                 var encounter = await _client.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnpointId);
 
@@ -427,7 +429,7 @@ namespace PokemonGo.RocketAPI.Logic
 
                     List<string> lstData = vrloc.Split(';').ToList();
 
-                    if (hsVisitedPokeSpawnIds.Contains(lstData[2]))
+                    if (Client.hsVisitedPokeSpawnIds.Contains(lstData[2]))
                         continue;
 
                     if (Convert.ToDouble(returnMinerUTC()) > Convert.ToDouble(lstData[3]))
@@ -656,7 +658,6 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             await Task.Delay(3000);
         }
 
-        private static HashSet<string> hsVisitedPokeSpawnIds = new HashSet<string>();
 
         private static string returnMinerUTC()
         {
@@ -684,7 +685,7 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                if (hsVisitedPokeSpawnIds.Contains(reader["spawn_id"]))
+                if (Client.hsVisitedPokeSpawnIds.Contains(reader["spawn_id"]))
                     continue;
                 string srResult = reader["lat"] + ";" + reader["lon"] + ";" + reader["spawn_id"] + ";" + reader["expire_timestamp"];
                 lstPokeInfo.Add(srResult);
