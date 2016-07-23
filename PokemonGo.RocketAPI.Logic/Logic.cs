@@ -324,6 +324,8 @@ namespace PokemonGo.RocketAPI.Logic
                 var distance = LocationUtils.CalculateDistanceInMeters(_client.CurrentLat, _client.CurrentLng, pokemon.Latitude, pokemon.Longitude);
                 await Task.Delay(distance > 100 ? 15000 : 500);
 
+                hsVisitedPokeSpawnIds.Add(pokemon.SpawnpointId.ToString());
+
                 var encounter = await _client.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnpointId);
 
                 if (encounter.Status == EncounterResponse.Types.Status.EncounterSuccess)
@@ -671,6 +673,8 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
+                if (hsVisitedPokeSpawnIds.Contains(reader["spawn_id"]))
+                    continue;
                 string srResult = reader["lat"] + ";" + reader["lon"] + ";" + reader["spawn_id"];
                 lstPokeInfo.Add(srResult);
             }
