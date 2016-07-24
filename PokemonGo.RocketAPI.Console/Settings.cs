@@ -52,7 +52,7 @@ namespace PokemonGo.RocketAPI.Console
             new KeyValuePair<ItemId, int>(ItemId.ItemPotion, 0),
             new KeyValuePair<ItemId, int>(ItemId.ItemSuperPotion, 0),
             new KeyValuePair<ItemId, int>(ItemId.ItemHyperPotion, 100),
-            new KeyValuePair<ItemId, int>(ItemId.ItemMaxPotion, 50),
+            new KeyValuePair<ItemId, int>(ItemId.ItemMaxPotion, 100),
             new KeyValuePair<ItemId, int>(ItemId.ItemRevive, 50),
             new KeyValuePair<ItemId, int>(ItemId.ItemMaxRevive, 50),
             new KeyValuePair<ItemId, int>(ItemId.ItemLuckyEgg, 200),

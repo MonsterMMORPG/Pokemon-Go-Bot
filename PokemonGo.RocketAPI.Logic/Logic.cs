@@ -325,8 +325,8 @@ namespace PokemonGo.RocketAPI.Logic
                 await Task.Delay(distance > 100 ? 15000 : 500);
 
                 string srFilename = Directory.GetCurrentDirectory() + "\\VisitedPokeSpawns.txt";
-                File.WriteAllLines(srFilename, Client.hsVisitedPokeSpawnIds);
-                Client.hsVisitedPokeSpawnIds.Add(pokemon.SpawnpointId.ToString());
+                //File.WriteAllLines(srFilename, Client.hsVisitedPokeSpawnIds);
+                //Client.hsVisitedPokeSpawnIds.Add(pokemon.SpawnpointId.ToString());
 
                 var encounter = await _client.EncounterPokemon(pokemon.EncounterId, pokemon.SpawnpointId);
 
@@ -414,6 +414,8 @@ namespace PokemonGo.RocketAPI.Logic
             double dblMinDistLat = 0;
             double dblMinDistLng = 0;
             string srMinDistLoc = "na";
+            double dblRareIndex = 9999;
+            int irRarePokeId = 0;
 
             if (hsGonaLocations.Count > vrList.Count - 10)
             {
@@ -429,11 +431,13 @@ namespace PokemonGo.RocketAPI.Logic
 
                     List<string> lstData = vrloc.Split(';').ToList();
 
-                    if (Client.hsVisitedPokeSpawnIds.Contains(lstData[2]))
-                        continue;
+                    //if (Client.hsVisitedPokeSpawnIds.Contains(lstData[2]))
+                    //    continue;
 
                     if (Convert.ToDouble(returnMinerUTC()) > Convert.ToDouble(lstData[3]))
                         continue;
+
+
 
                     double dblLat;
                     double dblLong;
@@ -446,16 +450,25 @@ namespace PokemonGo.RocketAPI.Logic
                         continue;
                     }
 
+                    int irPokemonId = Convert.ToInt32(lstData[4]);
+
+                    int irThisRareIndex = 999;
+                    if (Client.lstPriorityPokemon.Contains(irPokemonId) == true)
+                    {
+                        irThisRareIndex = Client.lstPriorityPokemon.IndexOf(irPokemonId);
+                    }
+
                     var distance = LocationUtils.CalculateDistanceInMeters(_client.CurrentLat, _client.CurrentLng, dblLat, dblLong);
 
-                    if (distance < dblMinDistance)
+                    if (distance < dblMinDistance || (dblRareIndex > irThisRareIndex))
                     {
                         dblMinDistance = distance;
                         dblMinDistLat = dblLat;
                         dblMinDistLng = dblLong;
                         srMinDistLoc = vrloc;
+                        dblRareIndex = irThisRareIndex;
+                        irRarePokeId = irPokemonId;
                     }
-
                 }
 
                 blPokeStopFound = false;
@@ -474,7 +487,9 @@ namespace PokemonGo.RocketAPI.Logic
                     break;
                 }
 
-                Logger.Write("(LOCATION) loop " + irLoop + " target: " + srMinDistLoc, LogLevel.Self, ConsoleColor.DarkGray);
+                Logger.Write("(LOCATION) loop " + irLoop + " Poke Id " + irRarePokeId + " target: " + srMinDistLoc, LogLevel.Self, ConsoleColor.DarkGray);
+                if (dblRareIndex != 999)
+                    Logger.Write("Going for rare Index " + dblRareIndex + " rare Poke Id " + irRarePokeId, LogLevel.Self, ConsoleColor.DarkMagenta);
 
                 if (dblMinDistLat > 0 && dblMinDistLng > 0)
                 {
@@ -685,9 +700,9 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                if (Client.hsVisitedPokeSpawnIds.Contains(reader["spawn_id"]))
-                    continue;
-                string srResult = reader["lat"] + ";" + reader["lon"] + ";" + reader["spawn_id"] + ";" + reader["expire_timestamp"];
+                //if (Client.hsVisitedPokeSpawnIds.Contains(reader["spawn_id"]))
+                //    continue;
+                string srResult = reader["lat"] + ";" + reader["lon"] + ";" + reader["spawn_id"] + ";" + reader["expire_timestamp"] + ";" + reader["pokemon_id"];
                 lstPokeInfo.Add(srResult);
             }
             return lstPokeInfo;
