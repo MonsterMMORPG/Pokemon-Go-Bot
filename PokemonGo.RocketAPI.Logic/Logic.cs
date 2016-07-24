@@ -550,7 +550,7 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             {
                 blCriticalBall = true;
             }
-            if ((pokeBallsCount + greatBallsCount + ultraBallsCount) > 100)
+            if ((pokeBallsCount + greatBallsCount + ultraBallsCount) > 50)
             {
                 blCriticalBall = false;
             }
