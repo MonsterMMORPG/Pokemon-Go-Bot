@@ -414,7 +414,7 @@ namespace PokemonGo.RocketAPI.Logic
             double dblMinDistLat = 0;
             double dblMinDistLng = 0;
             string srMinDistLoc = "na";
-            double dblRareIndex = 9999;
+            double dblRareIndex = 999;
             int irRarePokeId = 0;
 
             if (hsGonaLocations.Count > vrList.Count - 10)
@@ -426,8 +426,11 @@ namespace PokemonGo.RocketAPI.Logic
             {
                 foreach (var vrloc in vrList)
                 {
+
                     if (hsGonaLocations.Contains(vrloc))
                         continue;
+
+
 
                     List<string> lstData = vrloc.Split(';').ToList();
 
@@ -452,6 +455,12 @@ namespace PokemonGo.RocketAPI.Logic
 
                     int irPokemonId = Convert.ToInt32(lstData[4]);
 
+                    if (irPokemonId == 8)
+                    {
+                        string asdas = "";
+                    }
+
+
                     int irThisRareIndex = 999;
                     if (Client.lstPriorityPokemon.Contains(irPokemonId) == true)
                     {
@@ -460,7 +469,16 @@ namespace PokemonGo.RocketAPI.Logic
 
                     var distance = LocationUtils.CalculateDistanceInMeters(_client.CurrentLat, _client.CurrentLng, dblLat, dblLong);
 
-                    if (distance < dblMinDistance || (dblRareIndex > irThisRareIndex))
+
+                    if (distance < dblMinDistance && dblRareIndex >= irThisRareIndex)
+                    {
+                        dblMinDistance = distance;
+                        dblMinDistLat = dblLat;
+                        dblMinDistLng = dblLong;
+                        srMinDistLoc = vrloc;
+                        irRarePokeId = irPokemonId;
+                    }
+                    if (dblRareIndex > irThisRareIndex && Client.blEnablePerfectHunt == true)
                     {
                         dblMinDistance = distance;
                         dblMinDistLat = dblLat;
@@ -487,12 +505,13 @@ namespace PokemonGo.RocketAPI.Logic
                     break;
                 }
 
-                Logger.Write("(LOCATION) loop " + irLoop + " Poke Id " + irRarePokeId + " target: " + srMinDistLoc, LogLevel.Self, ConsoleColor.DarkGray);
-                if (dblRareIndex != 999)
-                    Logger.Write("Going for rare Index " + dblRareIndex + " rare Poke Id " + irRarePokeId, LogLevel.Self, ConsoleColor.DarkMagenta);
-
                 if (dblMinDistLat > 0 && dblMinDistLng > 0)
                 {
+
+                    Logger.Write("(LOCATION) loop " + irLoop + " Poke Id " + irRarePokeId + " target: " + srMinDistLoc, LogLevel.Self, ConsoleColor.DarkGray);
+                    if (dblRareIndex != 999)
+                        Logger.Write("Going for rare Index " + dblRareIndex + " rare Poke Id " + irRarePokeId, LogLevel.Self, ConsoleColor.DarkMagenta);
+
                     hsGonaLocations.Add(srMinDistLoc);
                     var update =
     await
