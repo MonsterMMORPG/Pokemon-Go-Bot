@@ -11,11 +11,11 @@
 <p>Once you setup your pokeminer, start agents around the location you will start farming your bot</p>
 
 <p>In our application you have set the location of your Poke Miner db</p>
-<p>In order to do so go to <b>Logic.cs<b> and find the function <b>funcReturnPokeLoc</b></p>
-<p>In this funtion you will see <b>new SQLiteConnection(@"Data Source=C:\Python27\db.sqlite;Version=3;");<b></p>
+<p>In order to do so go to <b>Logic.cs</b> and find the function <b>funcReturnPokeLoc</b></p>
+<p>In this funtion you will see <b>new SQLiteConnection(@"Data Source=C:\Python27\db.sqlite;Version=3;");</b></p>
 <p>Modify the Poke Miner db location as you wish</p>
 
-<p>For rare Pokemon Hunting list go to <b>Client.cs<b> and find the list <b>lstPriorityPokemon<b></p>
+<p>For rare Pokemon Hunting list go to <b>Client.cs</b> and find the list <b>lstPriorityPokemon</b></p>
 <p>Modify the rare Pokemon IDs as you wish</p>
 
 <p>It has a priority so put your most wanted pokemon into the beginning of the list</p>
