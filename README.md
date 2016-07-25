@@ -11,7 +11,7 @@
 <p>Once you setup your pokeminer, start agents around the location you will start farming your bot</p>
 
 <p>In our application you have set the location of your Poke Miner db</p>
-<p>In order to do so go to Logic.cs and find the function funcReturnPokeLoc</p>
+<p>In order to do so go to Logic.cs and find the function <b>funcReturnPokeLoc</b></p>
 <p>In this funtion you will see    new SQLiteConnection(@"Data Source=C:\Python27\db.sqlite;Version=3;");</p>
 <p>Modify the Poke Miner db location as you wish</p>
 
