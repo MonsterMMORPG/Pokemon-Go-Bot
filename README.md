@@ -8,6 +8,12 @@
 - Rare Pokemon priority hunting by Poke Miner
 - Auto switch between Pokemon hunting and PokeStop farming according to Poke Ball count
 - Full scale account details loggin. The details file is saved in the folder where you run your console.exe
+- Perfectly stable can run over 24 hours
+
+## Why seperate project?
+- I started as a seperate project since i am still a total noob of GitHub code management system
+- I have never collabareted previously with any other developers. Thus, i have to improve my skills
+- In future this project may discontinue if the all features here get added to Original Project
 
 ## How to use?
 <p>Set your location around a place where there are PokeStops. I suggest you to farm in your city.</p>
@@ -30,3 +36,7 @@
 <p>Feel free to ask any questions with opening issues</p>
 
 <p>Thank you for reading</p>
+
+## What is lack?
+- Still can not incbuate eggs
+
