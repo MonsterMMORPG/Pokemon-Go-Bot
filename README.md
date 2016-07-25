@@ -48,6 +48,7 @@
 ## What is lack?
 - Still cannot incubate eggs
 
-### Screenshot from the best giveaway account farming :)
+## Screenshot from the best giveaway account farming :) 
+### You can reach up to 50k exp per hour without lucky egg based on how well the PTC servers working and how good area you farm
 
 ![Pokemon Go Bot Screen!](Static/pokemon-go-bot.png)
