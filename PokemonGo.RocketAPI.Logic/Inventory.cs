@@ -8,6 +8,7 @@ using PokemonGo.RocketAPI.GeneratedCode;
 using System.Collections.Concurrent;
 using System;
 using System.Threading;
+using PokemonGo.RocketAPI.Helpers;
 
 #endregion
 
@@ -223,7 +224,26 @@ namespace PokemonGo.RocketAPI.Logic
                     ss.Release();
                 }
             }
-
         }
+
+        public async Task<IEnumerable<PokemonData>> GetEggs()
+        {
+            var inventory = await _client.GetInventory();
+            return
+                inventory.InventoryDelta.InventoryItems.Select(i => i.InventoryItemData?.Pokemon)
+                    .Where(p => p != null && p.IsEgg);
+        }
+
+        public async Task<IEnumerable<EggIncubator>> GetIncubators()
+        {
+            var inventory = await _client.GetInventory();
+            return inventory.InventoryDelta.InventoryItems
+                .Where(x => x.InventoryItemData.EggIncubators != null)
+                .Select(i => i.InventoryItemData?.EggIncubators?.EggIncubator)
+                    .Where(i => i != null);
+        }
+
+        // Client.cs
+  
     }
 }

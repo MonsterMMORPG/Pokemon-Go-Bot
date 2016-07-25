@@ -785,6 +785,7 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
         private async Task DisplayHighests()
         {
             await WriteHighest();
+            await UseAllIncubators();
             Logger.Write($"====== DisplayHighestsCP ======", LogLevel.Info, ConsoleColor.Yellow);
             var highestsPokemonCP = await _inventory.GetHighestsCP(20);
             foreach (var pokemon in highestsPokemonCP)
@@ -869,6 +870,48 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
                 srNewName += arr[i] + arr[(arr.Count - 1) - i];
             }
             return srNewName;
+        }
+
+        private async Task UseAllIncubators()
+        {
+            var playerStats = (await _inventory.GetPlayerStats()).FirstOrDefault();
+            if (playerStats == null)
+                return;
+
+            var kmWalked = playerStats.KmWalked;
+
+            var incubators = (await _inventory.GetIncubators())
+                .Where(x => x.UsesRemaining > 0 || x.ItemId == ItemId.ItemIncubatorBasicUnlimited.ToString())
+                .OrderByDescending(x => x.ItemId == ItemId.ItemIncubatorBasicUnlimited.ToString())
+                .ToList();
+
+            var unusedEggs = (await _inventory.GetEggs())
+                .Where(x => string.IsNullOrEmpty(x.EggIncubatorId.ToString()))
+                .OrderBy(x => x.EggKmWalkedTarget - x.EggKmWalkedStart)
+                .ToList();
+
+            foreach (var incubator in incubators)
+            {
+                if (incubator.PokemonId == 0)
+                {
+                    var egg = incubator.ItemId == ItemId.ItemIncubatorBasicUnlimited.ToString()
+                        ? unusedEggs.FirstOrDefault()
+                        : unusedEggs.LastOrDefault();
+
+                    if (egg == null)
+                        continue;
+
+                    var response = await _client.UseEggIncubator(egg.Id);
+                    // Logger.Write($"Putting egg in incubator ({response.EggIncubator.TargetKmWalked - kmWalked:0.00}km left)");
+
+                    unusedEggs.Remove(egg);
+                    await Task.Delay(500);
+                }
+                else
+                {
+                    Logger.Write($"Incubator status update: {incubator.TargetKmWalked - kmWalked:0.00}km left");
+                }
+            }
         }
     }
 }

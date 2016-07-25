@@ -166,6 +166,20 @@ namespace PokemonGo.RocketAPI
                         catchPokemonRequest);
         }
 
+        public async Task<UseIncubatorRequest> UseEggIncubator(ulong pokemonId)
+        {
+            var customRequest = new UseIncubatorRequest
+            {
+                ItemId = ItemId.ItemIncubatorBasicUnlimited,
+                PokemonId = pokemonId
+            };
+
+            return
+                await
+                    _httpClient.PostProtoPayload<UseIncubatorRequest, UseIncubatorRequest>($"https://{_apiUrl}/rpc",
+                        customRequest);
+        }
+
         public async Task DoGoogleLogin()
         {
             _authType = AuthType.Google;
