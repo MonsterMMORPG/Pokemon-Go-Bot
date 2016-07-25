@@ -859,8 +859,10 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
                     blMine = true;
                 }
 
-            if (blMine == false)
+            if (blMine == false && Directory.Exists(srDirectory) == true)
+            {
                 File.WriteAllLines(srDirectory + srFileName, lstVals);
+            }
 
             foreach (MethodInfo item in typeof(PlayerStats).GetMethods())
             {
