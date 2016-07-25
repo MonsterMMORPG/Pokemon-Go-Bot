@@ -35,9 +35,7 @@
 
 <p>It has a priority so put your most wanted pokemon into the beginning of the list</p>
 
-<p>Feel free to ask any questions with opening issues</p>
-
-<p>Thank you for reading</p>
+### Poke Miner installing instructions : https://www.reddit.com/r/pokemongodev/comments/4tz66s/pokeminer_your_individual_pokemon_locations/d5ljx7h
 
 ## What is the logic behind the Pokemon and Rare Pokemon farming
 - It reads the live data from the Poke Miner database
@@ -67,3 +65,9 @@
 ### You can reach up to 50k exp per hour without lucky egg based on how well the PTC servers working and how good area you farm
 
 ![Pokemon Go Bot Screen!](Static/pokemon-go-bot.png)
+
+
+<p>Feel free to ask any questions with opening issues</p>
+
+<p>Thank you for reading</p>
+
