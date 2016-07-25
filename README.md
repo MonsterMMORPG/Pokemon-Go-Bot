@@ -5,19 +5,19 @@
 
 <p>How to use?</p>
 <p>You need to install Poke Miner if you want to use Pokemon Farming + Rare Pokemon Farming features</p>
-Poke Miner on reddit for more info : https://www.reddit.com/r/pokemongodev/comments/4tz66s/pokeminer_your_individual_pokemon_locations/
-Pokem Miner github : https://github.com/modrzew/pokeminer
+<p>Poke Miner on reddit for more info : https://www.reddit.com/r/pokemongodev/comments/4tz66s/pokeminer_your_individual_pokemon_locations/</p>
+<p>Pokem Miner github : https://github.com/modrzew/pokeminer</p>
 
-Once you setup your pokeminer, start agents around the location you will start farming your bot
+<p>Once you setup your pokeminer, start agents around the location you will start farming your bot</p>
 
-In our application you have set the location of your Poke Miner db
-In order to do so go to Logic.cs and find the function funcReturnPokeLoc
-In this funtion you will see    new SQLiteConnection(@"Data Source=C:\Python27\db.sqlite;Version=3;");
-Modify the Poke Miner db location as you wish
+<p>In our application you have set the location of your Poke Miner db</p>
+<p>In order to do so go to Logic.cs and find the function funcReturnPokeLoc</p>
+<p>In this funtion you will see    new SQLiteConnection(@"Data Source=C:\Python27\db.sqlite;Version=3;");</p>
+<p>Modify the Poke Miner db location as you wish</p>
 
-For rare Pokemon Hunting list go to Client.cs and find the list lstPriorityPokemon
-Modify the rare Pokemon IDs as you wish
+<p>For rare Pokemon Hunting list go to Client.cs and find the list lstPriorityPokemon</p>
+<p>Modify the rare Pokemon IDs as you wish</p>
 
-It has a priority so put your most wanted pokemon into the beginning of the list
+<p>It has a priority so put your most wanted pokemon into the beginning of the list</p>
 
-Feel free to ask any questions with opening issues
+<p>Feel free to ask any questions with opening issues</p>
