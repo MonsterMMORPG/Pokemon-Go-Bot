@@ -43,7 +43,8 @@
 - It reads the live data from the Poke Miner database
 - Then calculates the shortest distance having Pokemon to your current location and go for hunting it
 - However, if you have setup priority list and if there is a priority Pokemon, instead of going to shortest distance Pokemon, first it goes to priority Pokemon
-- Then from that location, it scans the database and goes after the shortest location pokemon to you unless there is another priority Pokemon :)
+- Then from that location, it scans the database and goes after the shortest location pokemon to you. 
+- Unless, if there is an another priority Pokemon :)
 
 ## Don't forget to set pre-defined PokeStops locations and your starting location
 - If the bot can not find any nearby Pokestop, it moves to next pre-defined Poke Stop location
