@@ -457,7 +457,7 @@ namespace PokemonGo.RocketAPI.Logic
                     double.TryParse(vrloc.Split(';')[1].Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out dblLong);
 
 
-                    if (dblLat < 1 || dblLong < 1)
+                    if (dblLat == 0 || dblLong == 0)
                     {
                         continue;
                     }
@@ -514,7 +514,7 @@ namespace PokemonGo.RocketAPI.Logic
                     break;
                 }
 
-                if (dblMinDistLat > 0 && dblMinDistLng > 0)
+                if (dblMinDistLat != 0 || dblMinDistLng != 0)
                 {
 
                     blWentAnyLoc = true;
