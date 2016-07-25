@@ -425,6 +425,8 @@ namespace PokemonGo.RocketAPI.Logic
                 //  hsGonaLocations = new HashSet<string>(); bu eski dosyadan okuma
             }
 
+            bool blWentAnyLoc = false;
+
             for (int i = 0; i < vrList.Count; i++)
             {
                 foreach (var vrloc in vrList)
@@ -511,6 +513,7 @@ namespace PokemonGo.RocketAPI.Logic
                 if (dblMinDistLat > 0 && dblMinDistLng > 0)
                 {
 
+                    blWentAnyLoc = true;
                     Logger.Write("(LOCATION) loop " + irLoop + " Poke Id " + irRarePokeId + " target: " + srMinDistLoc, LogLevel.Self, ConsoleColor.DarkGray);
                     if (dblRareIndex != 999)
                         Logger.Write("Going for rare Index " + dblRareIndex + " rare Poke Id " + irRarePokeId, LogLevel.Self, ConsoleColor.DarkMagenta);
@@ -532,7 +535,7 @@ namespace PokemonGo.RocketAPI.Logic
 
             }
 
-            if (vrList.Count == 0)
+            if (blWentAnyLoc == false)
             {
                 Logger.Write("No location found make sure that poke miner is running!", LogLevel.Self, ConsoleColor.Yellow);
                 blCheckingPokeStop = true;
