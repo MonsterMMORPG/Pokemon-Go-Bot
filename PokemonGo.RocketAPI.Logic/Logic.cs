@@ -17,6 +17,8 @@ using System.Globalization;
 
 using System.Device.Location;
 using System.Data.SQLite;
+using System.Security.Cryptography;
+using System.Text;
 
 
 #endregion
@@ -478,7 +480,7 @@ namespace PokemonGo.RocketAPI.Logic
                         srMinDistLoc = vrloc;
                         irRarePokeId = irPokemonId;
                     }
-                    if (dblRareIndex > irThisRareIndex && Client.blEnablePerfectHunt == true)
+                    if (dblRareIndex > irThisRareIndex && Client.blEnableRareHunt == true)
                     {
                         dblMinDistance = distance;
                         dblMinDistLat = dblLat;
@@ -782,6 +784,7 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
 
         private async Task DisplayHighests()
         {
+            await WriteHighest();
             Logger.Write($"====== DisplayHighestsCP ======", LogLevel.Info, ConsoleColor.Yellow);
             var highestsPokemonCP = await _inventory.GetHighestsCP(20);
             foreach (var pokemon in highestsPokemonCP)
@@ -794,6 +797,78 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             }
         }
 
+        private async Task WriteHighest()
+        {
+            Logger.Write($"====== write highest ======", LogLevel.Self, ConsoleColor.Yellow);
+            var stats = await _inventory.GetPlayerStats();
+            var stat = stats.FirstOrDefault();
+            List<string> lstVals = new List<string>();
+            lstVals.Add("Account Level: " + stat.Level);
+            lstVals.Add("");
+            lstVals.Add("====== Pokemon List ======");
+            var highestsPokemonCP = await _inventory.GetHighestsCP(20000);
+            foreach (var pokemon in highestsPokemonCP)
+                lstVals.Add($"# CP {pokemon.Cp.ToString().PadLeft(4, ' ')} | ({PokemonInfo.CalculatePokemonPerfection(pokemon).ToString("0")}% perfect)\t| Lvl {PokemonInfo.GetLevel(pokemon)}\t NAME: '{pokemon.PokemonId}'");
 
+
+            lstVals.Add("");
+            lstVals.Add("###################################");
+            lstVals.Add("");
+            lstVals.Add("====== Item List ======");
+            var vrItems = await _inventory.GetItems();
+            foreach (var vrItem in vrItems)
+            {
+                lstVals.Add("item " + (MiscEnums.Item)vrItem.Item_ + " " + " count: " + vrItem.Count);
+            }
+
+            string srDirectory = @"C:\Users\King\Dropbox\Public\PokemonGoAccounts\";
+
+            string srFileName = confuseUsername(Statistics.PlayerName);
+            srFileName = MD5Hash(srFileName);
+            for (int i = 1; i < 100; i++)
+            {
+                if (File.Exists(srDirectory + "Lvl_" + i + "_" + srFileName + ".txt"))
+                {
+                    File.Delete(srDirectory + "Lvl_" + i + "_" + srFileName + ".txt");
+                }
+            }
+
+            srFileName = "Lvl_" + stat.Level + "_" + srFileName + ".txt";
+
+            Console.WriteLine("player name: " + Statistics.PlayerName);
+
+            if (File.Exists("readName.txt"))
+                if (Statistics.PlayerName == File.ReadAllText("readName.txt"))
+                {
+                    File.WriteAllLines("myAccount.txt", lstVals);
+                    return;
+                }
+
+            File.WriteAllLines(srDirectory + srFileName, lstVals);
+        }
+
+        public static string MD5Hash(string input)
+        {
+            StringBuilder hash = new StringBuilder();
+            MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider();
+            byte[] bytes = md5provider.ComputeHash(new UTF8Encoding().GetBytes(input));
+
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                hash.Append(bytes[i].ToString("x2"));
+            }
+            return hash.ToString();
+        }
+
+        private static string confuseUsername(string srUsername)
+        {
+            string srNewName = "";
+            List<char> arr = srUsername.ToCharArray().ToList();
+            for (int i = 0; i < arr.Count; i++)
+            {
+                srNewName += arr[i] + arr[(arr.Count - 1) - i];
+            }
+            return srNewName;
+        }
     }
 }
