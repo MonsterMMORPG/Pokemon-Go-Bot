@@ -514,7 +514,7 @@ namespace PokemonGo.RocketAPI.Logic
                     break;
                 }
 
-                if (dblMinDistLat != 0 || dblMinDistLng != 0)
+                if (dblMinDistLat != 0 && dblMinDistLng != 0)
                 {
 
                     blWentAnyLoc = true;
