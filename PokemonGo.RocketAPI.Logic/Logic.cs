@@ -720,12 +720,15 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             SQLiteConnection m_dbConnection = null;
             try
             {
+
                 m_dbConnection =
        new SQLiteConnection(@"Data Source=C:\Python27\db.sqlite;Version=3;");
                 m_dbConnection.Open();
             }
             catch (Exception E)
             {
+                Logger.Write("Error " + E.Message?.ToString(), LogLevel.Info, ConsoleColor.Yellow);
+                Logger.Write("Error " + E.InnerException?.Message?.ToString(), LogLevel.Info, ConsoleColor.Yellow);
                 return lstPokeInfo;
             }
 
