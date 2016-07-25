@@ -453,8 +453,9 @@ namespace PokemonGo.RocketAPI.Logic
                     double dblLat;
                     double dblLong;
 
-                    double.TryParse(vrloc.Split(';')[0], NumberStyles.Any, CultureInfo.InvariantCulture, out dblLat);
-                    double.TryParse(vrloc.Split(';')[1], NumberStyles.Any, CultureInfo.InvariantCulture, out dblLong);
+                    double.TryParse(vrloc.Split(';')[0].Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out dblLat);
+                    double.TryParse(vrloc.Split(';')[1].Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out dblLong);
+
 
                     if (dblLat < 1 || dblLong < 1)
                     {
