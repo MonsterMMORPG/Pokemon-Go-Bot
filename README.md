@@ -37,6 +37,13 @@
 
 <p>Thank you for reading</p>
 
+## Don't forget to set pre-defined PokeStops locations
+- If the bot can not find any nearby Pokestop, it moves to next pre-defined Poke Stop location
+- You can modify the locations inside <b>Client.cs</b>
+- The pre configured list name is <b>lstPokeStopLocations</b>
+- I suggest putting different poke stop locations in a close range area like 5 km radius or 10
+- Do not worry, it will not jump but walk to the next location with the speed you have defined in your app settings
+
 ## What is lack?
 - Still cannot incubate eggs
 
