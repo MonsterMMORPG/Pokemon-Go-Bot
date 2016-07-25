@@ -37,13 +37,17 @@
 
 <p>Thank you for reading</p>
 
-## Don't forget to set pre-defined PokeStops locations
+## Don't forget to set pre-defined PokeStops locations and your starting location
 - If the bot can not find any nearby Pokestop, it moves to next pre-defined Poke Stop location
 - You can modify the locations inside <b>Client.cs</b>
 - The pre configured list name is <b>lstPokeStopLocations</b>
 - I suggest putting different poke stop locations in a close range area like 5 km radius or 10
 - Do not worry, it will not jump but walk to the next location with the speed you have defined in your app settings
+- Start location file is saved in <b>App.config</b> under <b>RocketAPI.Console project</b>
 
 ## What is lack?
 - Still cannot incubate eggs
 
+### Screenshot from the best giveaway account farming :)
+
+![Pokemon Go Bot Screen!](Static/pokemon-go-bot.png)
