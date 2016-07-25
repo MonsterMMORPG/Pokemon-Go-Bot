@@ -876,32 +876,41 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             lstVals.Add("");
 
             try
-            {           
-            lstVals.Add("Star Dust: " + profile.Profile.Currency.ToArray()[1].Amount);
-            lstVals.Add($"BattleAttackTotal: {stat.BattleAttackTotal}");
-            lstVals.Add($"BattleAttackWon: {stat.BattleAttackWon}");
-            lstVals.Add($"BattleDefendedWon: {stat.BattleDefendedWon}");
-            lstVals.Add($"BattleTrainingTotal: {stat.BattleTrainingTotal}");
-            lstVals.Add($"BattleTrainingWon: {stat.BattleTrainingWon}");
-            lstVals.Add($"BigMagikarpCaught: {stat.BigMagikarpCaught}");
-            lstVals.Add($"EggsHatched: {stat.EggsHatched}");
-            lstVals.Add($"Evolutions: {stat.Evolutions}");
-            lstVals.Add($"Experience: {stat.Experience}");
-            lstVals.Add($"KmWalked: {stat.KmWalked}");
-            lstVals.Add($"Level: {stat.Level}");
-            lstVals.Add($"NextLevelXp: {stat.NextLevelXp}");
-            lstVals.Add($"PokeballsThrown: {stat.PokeballsThrown}");
-            lstVals.Add($"PokemonDeployed: {stat.PokemonDeployed}");
-            lstVals.Add($"PokemonsCaptured: {stat.PokemonsCaptured}");
-            lstVals.Add($"PokemonsEncountered: {stat.PokemonsEncountered}");
-            lstVals.Add($"PokeStopVisits: {stat.PokeStopVisits}");
-            lstVals.Add($"PrestigeDroppedTotal: {stat.PrestigeDroppedTotal}");
-            lstVals.Add($"PrestigeRaisedTotal: {stat.PrestigeRaisedTotal}");
-            lstVals.Add($"PrevLevelXp: {stat.PrevLevelXp}");
-            lstVals.Add($"SmallRattataCaught: {stat.SmallRattataCaught}");
-            lstVals.Add($"UniquePokedexEntries: {stat.UniquePokedexEntries}");
+            {
+
+                try
+                {
+                    lstVals.Add("Star Dust: " + profile.Profile.Currency.ToArray()[1].Amount);
+                }
+                catch
+                {
+                    Logger.Write($"Error when writing detailed descriptions. Make sure you have completed trial in the game", LogLevel.Self, ConsoleColor.Yellow);
+                }
+
+                lstVals.Add($"BattleAttackTotal: {stat.BattleAttackTotal}");
+                lstVals.Add($"BattleAttackWon: {stat.BattleAttackWon}");
+                lstVals.Add($"BattleDefendedWon: {stat.BattleDefendedWon}");
+                lstVals.Add($"BattleTrainingTotal: {stat.BattleTrainingTotal}");
+                lstVals.Add($"BattleTrainingWon: {stat.BattleTrainingWon}");
+                lstVals.Add($"BigMagikarpCaught: {stat.BigMagikarpCaught}");
+                lstVals.Add($"EggsHatched: {stat.EggsHatched}");
+                lstVals.Add($"Evolutions: {stat.Evolutions}");
+                lstVals.Add($"Experience: {stat.Experience}");
+                lstVals.Add($"KmWalked: {stat.KmWalked}");
+                lstVals.Add($"Level: {stat.Level}");
+                lstVals.Add($"NextLevelXp: {stat.NextLevelXp}");
+                lstVals.Add($"PokeballsThrown: {stat.PokeballsThrown}");
+                lstVals.Add($"PokemonDeployed: {stat.PokemonDeployed}");
+                lstVals.Add($"PokemonsCaptured: {stat.PokemonsCaptured}");
+                lstVals.Add($"PokemonsEncountered: {stat.PokemonsEncountered}");
+                lstVals.Add($"PokeStopVisits: {stat.PokeStopVisits}");
+                lstVals.Add($"PrestigeDroppedTotal: {stat.PrestigeDroppedTotal}");
+                lstVals.Add($"PrestigeRaisedTotal: {stat.PrestigeRaisedTotal}");
+                lstVals.Add($"PrevLevelXp: {stat.PrevLevelXp}");
+                lstVals.Add($"SmallRattataCaught: {stat.SmallRattataCaught}");
+                lstVals.Add($"UniquePokedexEntries: {stat.UniquePokedexEntries}");
             }
-            catch 
+            catch
             {
                 Logger.Write($"Error when writing detailed descriptions. Make sure you have completed trial in the game", LogLevel.Self, ConsoleColor.Yellow);
             }
