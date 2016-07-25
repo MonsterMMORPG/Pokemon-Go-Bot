@@ -10,6 +10,7 @@
 - Full scale account details logging. The details file is saved in the folder where you run your console.exe
 - Perfectly stable can run over 24 hours
 - I am farming 8 accounts right now. So, i am making changes as necessary as a farmer :D
+- Never gets soft banned because it always do human walking with the speed limit you have defined
 
 ## Why separate project?
 - I started as a separate project since i am still a total noob of GitHub code management system
