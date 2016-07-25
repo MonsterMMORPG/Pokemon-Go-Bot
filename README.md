@@ -37,6 +37,15 @@
 
 ### Poke Miner installing instructions : https://www.reddit.com/r/pokemongodev/comments/4tz66s/pokeminer_your_individual_pokemon_locations/d5ljx7h
 
+## Common errors and solutions
+- Make sure you have installed visual studio 2015
+- Open the app once and if you get error restart again and check nuget packages
+- Set console app as start up project
+- Make sure you have correctly set the Poke Miner database file location
+- Make sure you edit the settings from App.config file rather than UserSettings window
+- Right click and check installed nuget tools for all the projects
+- Check the thread on owned core which has many answers of many problems : http://www.ownedcore.com/forums/pokemon-go/pokemon-go-hacks-cheats/564208-pokemon-rare-hunting-bot-based-necronomicons-bot-utilizes-poke-miner-project.html
+
 ## What is the logic behind the Pokemon and Rare Pokemon farming
 - It reads the live data from the Poke Miner database
 - Then calculates the shortest distance having Pokemon to your current location and go for hunting it
