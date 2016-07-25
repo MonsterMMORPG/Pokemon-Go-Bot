@@ -9,6 +9,7 @@
 - Auto switch between Pokemon hunting and PokeStop farming according to Poke Ball count
 - Full scale account details logging. The details file is saved in the folder where you run your console.exe
 - Perfectly stable can run over 24 hours
+- I am farming 8 accounts right now. So, i am making changes as necessary as a farmer :D
 
 ## Why separate project?
 - I started as a separate project since i am still a total noob of GitHub code management system
@@ -44,6 +45,11 @@
 - I suggest putting different poke stop locations in a close range area like 5 km radius or 10
 - Do not worry, it will not jump but walk to the next location with the speed you have defined in your app settings
 - Start location file is saved in <b>App.config</b> under <b>RocketAPI.Console project</b>
+
+## Multiple Instance Farming
+- For multiple instance farming, copy entire debug folder and paste it into another folder
+- Each time you made changes, do the same operation for changes to be updated
+- It will not ask you to enter your password everytime you update the app :) So don't worry to make changes
 
 ## What is lack?
 - Still cannot incubate eggs
