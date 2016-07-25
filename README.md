@@ -21,3 +21,5 @@
 <p>It has a priority so put your most wanted pokemon into the beginning of the list</p>
 
 <p>Feel free to ask any questions with opening issues</p>
+
+<p>Thank you for reading</p>
