@@ -874,8 +874,10 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             lstVals.Add("");
             lstVals.Add("More account statistics for " + Statistics.PlayerName);
             lstVals.Add("");
-            lstVals.Add("Star Dust: " + profile.Profile.Currency.ToArray()[1].Amount);
 
+            try
+            {           
+            lstVals.Add("Star Dust: " + profile.Profile.Currency.ToArray()[1].Amount);
             lstVals.Add($"BattleAttackTotal: {stat.BattleAttackTotal}");
             lstVals.Add($"BattleAttackWon: {stat.BattleAttackWon}");
             lstVals.Add($"BattleDefendedWon: {stat.BattleDefendedWon}");
@@ -898,6 +900,12 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             lstVals.Add($"PrevLevelXp: {stat.PrevLevelXp}");
             lstVals.Add($"SmallRattataCaught: {stat.SmallRattataCaught}");
             lstVals.Add($"UniquePokedexEntries: {stat.UniquePokedexEntries}");
+            }
+            catch 
+            {
+                Logger.Write($"Error when writing detailed descriptions. Make sure you have completed trial in the game", LogLevel.Self, ConsoleColor.Yellow);
+            }
+
 
             lstVals.Add("");
             lstVals.Add("###################################");
@@ -905,35 +913,40 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
             lstVals.Add("More Pokemon statistics");
             lstVals.Add("");
 
-
-            var myPokemons = await _inventory.GetPokemons();
-            var pokemons = myPokemons.ToList();
-
-            var myPokemonSettings = await _inventory.GetPokemonSettings();
-            var pokemonSettings = myPokemonSettings.ToList();
-
-            var myPokemonFamilies = await _inventory.GetPokemonFamilies();
-            var pokemonFamilies = myPokemonFamilies.ToArray();
-
-            var pokemonToEvolve = new List<PokemonData>();
-            foreach (var pokemon in pokemons)
+            try
             {
-                var settings = pokemonSettings.Single(x => x.PokemonId == pokemon.PokemonId);
-                var familyCandy = pokemonFamilies.Single(x => settings.FamilyId == x.FamilyId);
+                var myPokemons = await _inventory.GetPokemons();
+                var pokemons = myPokemons.ToList();
 
-                //Don't evolve if we can't evolve it
-                if (settings.EvolutionIds.Count == 0)
-                    continue;
+                var myPokemonSettings = await _inventory.GetPokemonSettings();
+                var pokemonSettings = myPokemonSettings.ToList();
 
-                var pokemonCandyNeededAlready =
-                     pokemonToEvolve.Count(
-                         p => pokemonSettings.Single(x => x.PokemonId == p.PokemonId).FamilyId == settings.FamilyId) *
-                     settings.CandyToEvolve;
+                var myPokemonFamilies = await _inventory.GetPokemonFamilies();
+                var pokemonFamilies = myPokemonFamilies.ToArray();
 
-                lstVals.Add($"You have {familyCandy.Candy} candy for your " + pokemon.PokemonId + " and this Pokemon requires " + settings.CandyToEvolve + " candy");
+                var pokemonToEvolve = new List<PokemonData>();
+                foreach (var pokemon in pokemons)
+                {
+                    var settings = pokemonSettings.Single(x => x.PokemonId == pokemon.PokemonId);
+                    var familyCandy = pokemonFamilies.Single(x => settings.FamilyId == x.FamilyId);
 
+                    //Don't evolve if we can't evolve it
+                    if (settings.EvolutionIds.Count == 0)
+                        continue;
+
+                    var pokemonCandyNeededAlready =
+                         pokemonToEvolve.Count(
+                             p => pokemonSettings.Single(x => x.PokemonId == p.PokemonId).FamilyId == settings.FamilyId) *
+                         settings.CandyToEvolve;
+
+                    lstVals.Add($"You have {familyCandy.Candy} candy for your " + pokemon.PokemonId + " and this Pokemon requires " + settings.CandyToEvolve + " candy");
+
+                }
             }
-
+            catch
+            {
+                Logger.Write($"Error when writing detailed descriptions. Make sure you have completed trial in the game", LogLevel.Self, ConsoleColor.Yellow);
+            }
 
             File.WriteAllLines("myAccount.txt", lstVals);
         }
