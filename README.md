@@ -3,10 +3,10 @@
 # www.pokemonpets.com free Pokemon MMO RPG
 # www.monstermmorpg.com free Monster MMO RPG
 ## Features? 
-** More advanced Pokemon hunting by Poke Miner**
-** Rare Pokemon priority hunting by Poke Miner**
-** Auto switch between Pokemon hunting and PokeStop farming according to Poke Ball count**
-** Full scale account details loggin. The details file is saved in the folder where you run your console.exe**
+**More advanced Pokemon hunting by Poke Miner**
+**Rare Pokemon priority hunting by Poke Miner**
+**Auto switch between Pokemon hunting and PokeStop farming according to Poke Ball count**
+**Full scale account details loggin. The details file is saved in the folder where you run your console.exe**
 
 <p>How to use?</p>
 <p>Set your location around a place where there are PokeStops. I suggest you to farm in your city.</p>
