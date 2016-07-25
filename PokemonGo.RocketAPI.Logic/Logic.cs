@@ -411,6 +411,7 @@ namespace PokemonGo.RocketAPI.Logic
 
         private async Task ExeCuteMyFarm()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
             var vrList = funcReturnPokeLoc();
 
             Logger.Write("Location found count " + vrList.Count, LogLevel.Self, ConsoleColor.DarkGray);
@@ -718,6 +719,7 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
 
         private static List<string> funcReturnPokeLoc()
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
             List<string> lstPokeInfo = new List<string>();
             SQLiteConnection m_dbConnection = null;
             try
