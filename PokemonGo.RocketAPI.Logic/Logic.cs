@@ -518,9 +518,9 @@ namespace PokemonGo.RocketAPI.Logic
                 {
 
                     blWentAnyLoc = true;
-                    Logger.Write("(LOCATION) loop " + irLoop + " Poke Id " + irRarePokeId + " target: " + srMinDistLoc, LogLevel.Self, ConsoleColor.DarkGray);
+                    Logger.Write("Target Poke Loop " + irLoop + " | Target Poke " + (PokemonId)irRarePokeId + " (" + irRarePokeId + ") | Target: " + srMinDistLoc, LogLevel.Self, ConsoleColor.DarkGray);
                     if (dblRareIndex != 999)
-                        Logger.Write("Going for rare Index " + dblRareIndex + " rare Poke Id " + irRarePokeId, LogLevel.Self, ConsoleColor.DarkMagenta);
+                        Logger.Write("Going for rare Index " + dblRareIndex + "| Target Poke " + (PokemonId)irRarePokeId + " (" + irRarePokeId + ") | Target: " + srMinDistLoc, LogLevel.Self, ConsoleColor.DarkMagenta);
 
                     hsGonaLocations.Add(srMinDistLoc);
                     var update =
