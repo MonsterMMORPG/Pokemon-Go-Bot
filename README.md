@@ -4,7 +4,7 @@
 # Original fork : https://github.com/NecronomiconCoding/NecroBot
 
 <p>How to use?</p>
-You need to install Poke Miner if you want to use Pokemon Farming + Rare Pokemon Farming features
+<p>You need to install Poke Miner if you want to use Pokemon Farming + Rare Pokemon Farming features</p>
 Poke Miner on reddit for more info : https://www.reddit.com/r/pokemongodev/comments/4tz66s/pokeminer_your_individual_pokemon_locations/
 Pokem Miner github : https://github.com/modrzew/pokeminer
 
