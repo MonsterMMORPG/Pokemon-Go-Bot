@@ -367,6 +367,8 @@ namespace PokemonGo.RocketAPI.Logic
 
             var pokestopList = pokeStops.ToList();
 
+            int irCounter = 0;
+
             while (pokestopList.Any())
             {
                 blPokeStopFound = true;
@@ -403,6 +405,9 @@ namespace PokemonGo.RocketAPI.Logic
                 await Task.Delay(1000);
                 await RecycleItems();
                 if (_clientSettings.TransferDuplicatePokemon) await TransferDuplicatePokemon();
+                irCounter++;
+                if (irCounter >= 50)
+                    break;
             }
         }
 
