@@ -42,6 +42,7 @@ namespace PokemonGo.RocketAPI
 
         public static List<int> lstPriorityPokemon = new List<int> { 150, 149, 151, 146, 145, 143, 59, 131, 144, 103, 134, 130, 136, 89, 6, 80, 68, 3, 9, 71, 62, 45, 31, 34, 36, 55, 76, 126, 110, 112, 139, 73, 78, 38, 97, 121,  2, 3,  5, 6, 8, 9, 26, 31, 34, 36, 45, 65, 68, 71, 76, 83, 89, 97, 105, 107, 108, 110, 113, 115, 124, 128, 131, 132, 135, 137, 139, 141, 142, 144, 145, 146 };
         public static List<string> lstPokeStopLocations = new List<string> { "36.80204:34.63328", "36.79690:34.62960", "36.79528:34.62761" };
+
         public static int irLastPokeStopIndex = 0;
 
         public Client(ISettings settings)

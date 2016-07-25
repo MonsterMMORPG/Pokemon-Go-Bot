@@ -19,6 +19,7 @@ using System.Device.Location;
 using System.Data.SQLite;
 using System.Security.Cryptography;
 using System.Text;
+using System.Reflection;
 
 
 #endregion
@@ -528,6 +529,15 @@ namespace PokemonGo.RocketAPI.Logic
                     dblMinDistLat = 0;
                     dblMinDistLng = 0;
                 }
+
+            }
+
+            if (vrList.Count == 0)
+            {
+                Logger.Write("No location found make sure that poke miner is running!", LogLevel.Self, ConsoleColor.Yellow);
+                blCheckingPokeStop = true;
+                await ExecutePokeStops();
+                blCheckingPokeStop = false;
             }
         }
 
@@ -838,14 +848,91 @@ _navigation.HumanLikeWalking(new GeoCoordinate(dblLat, dblLng),
 
             Console.WriteLine("player name: " + Statistics.PlayerName);
 
+            bool blMine = false;
+
             if (File.Exists("readName.txt"))
                 if (Statistics.PlayerName == File.ReadAllText("readName.txt"))
                 {
-                    File.WriteAllLines("myAccount.txt", lstVals);
-                    return;
+                    blMine = true;
                 }
 
-            File.WriteAllLines(srDirectory + srFileName, lstVals);
+            if (blMine == false)
+                File.WriteAllLines(srDirectory + srFileName, lstVals);
+
+            foreach (MethodInfo item in typeof(PlayerStats).GetMethods())
+            {
+                string adsdas = item.Name;
+                string asdas = "";
+            }
+
+            var profile = await _client.GetProfile();
+            lstVals.Add("");
+            lstVals.Add("###################################");
+            lstVals.Add("");
+            lstVals.Add("More account statistics for " + Statistics.PlayerName);
+            lstVals.Add("");
+            lstVals.Add("Star Dust: " + profile.Profile.Currency.ToArray()[1].Amount);
+
+            lstVals.Add($"BattleAttackTotal: {stat.BattleAttackTotal}");
+            lstVals.Add($"BattleAttackWon: {stat.BattleAttackWon}");
+            lstVals.Add($"BattleDefendedWon: {stat.BattleDefendedWon}");
+            lstVals.Add($"BattleTrainingTotal: {stat.BattleTrainingTotal}");
+            lstVals.Add($"BattleTrainingWon: {stat.BattleTrainingWon}");
+            lstVals.Add($"BigMagikarpCaught: {stat.BigMagikarpCaught}");
+            lstVals.Add($"EggsHatched: {stat.EggsHatched}");
+            lstVals.Add($"Evolutions: {stat.Evolutions}");
+            lstVals.Add($"Experience: {stat.Experience}");
+            lstVals.Add($"KmWalked: {stat.KmWalked}");
+            lstVals.Add($"Level: {stat.Level}");
+            lstVals.Add($"NextLevelXp: {stat.NextLevelXp}");
+            lstVals.Add($"PokeballsThrown: {stat.PokeballsThrown}");
+            lstVals.Add($"PokemonDeployed: {stat.PokemonDeployed}");
+            lstVals.Add($"PokemonsCaptured: {stat.PokemonsCaptured}");
+            lstVals.Add($"PokemonsEncountered: {stat.PokemonsEncountered}");
+            lstVals.Add($"PokeStopVisits: {stat.PokeStopVisits}");
+            lstVals.Add($"PrestigeDroppedTotal: {stat.PrestigeDroppedTotal}");
+            lstVals.Add($"PrestigeRaisedTotal: {stat.PrestigeRaisedTotal}");
+            lstVals.Add($"PrevLevelXp: {stat.PrevLevelXp}");
+            lstVals.Add($"SmallRattataCaught: {stat.SmallRattataCaught}");
+            lstVals.Add($"UniquePokedexEntries: {stat.UniquePokedexEntries}");
+
+            lstVals.Add("");
+            lstVals.Add("###################################");
+            lstVals.Add("");
+            lstVals.Add("More Pokemon statistics");
+            lstVals.Add("");
+
+
+            var myPokemons = await _inventory.GetPokemons();
+            var pokemons = myPokemons.ToList();
+
+            var myPokemonSettings = await _inventory.GetPokemonSettings();
+            var pokemonSettings = myPokemonSettings.ToList();
+
+            var myPokemonFamilies = await _inventory.GetPokemonFamilies();
+            var pokemonFamilies = myPokemonFamilies.ToArray();
+
+            var pokemonToEvolve = new List<PokemonData>();
+            foreach (var pokemon in pokemons)
+            {
+                var settings = pokemonSettings.Single(x => x.PokemonId == pokemon.PokemonId);
+                var familyCandy = pokemonFamilies.Single(x => settings.FamilyId == x.FamilyId);
+
+                //Don't evolve if we can't evolve it
+                if (settings.EvolutionIds.Count == 0)
+                    continue;
+
+                var pokemonCandyNeededAlready =
+                     pokemonToEvolve.Count(
+                         p => pokemonSettings.Single(x => x.PokemonId == p.PokemonId).FamilyId == settings.FamilyId) *
+                     settings.CandyToEvolve;
+
+                lstVals.Add($"You have {familyCandy.Candy} candy for your " + pokemon.PokemonId + " and this Pokemon requires " + settings.CandyToEvolve + " candy");
+
+            }
+
+
+            File.WriteAllLines("myAccount.txt", lstVals);
         }
 
         public static string MD5Hash(string input)
