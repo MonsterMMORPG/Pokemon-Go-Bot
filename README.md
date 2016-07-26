@@ -44,6 +44,7 @@
 - Make sure you have correctly set the Poke Miner database file location
 - Make sure you edit the settings from App.config file rather than UserSettings window
 - Right click and check installed nuget tools for all the projects
+- Delete all text files in your debug folder and restart the app
 - Check the thread on owned core which has many answers of many problems : http://www.ownedcore.com/forums/pokemon-go/pokemon-go-hacks-cheats/564208-pokemon-rare-hunting-bot-based-necronomicons-bot-utilizes-poke-miner-project.html
 
 ## What is the logic behind the Pokemon and Rare Pokemon farming
