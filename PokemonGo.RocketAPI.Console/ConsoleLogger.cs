@@ -58,7 +58,7 @@ namespace PokemonGo.RocketAPI.Console
                     System.Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] (FARMING) {message}");
                     break;
                 case LogLevel.Recycling:
-                    System.Console.ForegroundColor = ConsoleColor.DarkMagenta;
+                    System.Console.ForegroundColor = ConsoleColor.DarkYellow;
                     System.Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] (RECYCLING) {message}");
                     break;
                 case LogLevel.Caught:
